@@ -3,8 +3,8 @@
 ### Getting Started
 
 ```
-> git clone https://github.com/StephenGrider/ReduxSimpleStarter.git
-> cd ReduxSimpleStarter
+> git https://github.com/teslovych/hotels-react-spa
+> cd hotels-react-spa
 > npm install
 > npm start
 
