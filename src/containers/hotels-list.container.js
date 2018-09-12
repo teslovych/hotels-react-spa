@@ -1,10 +1,19 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchHotels, FilterTypes} from "../actions/index";
-import HotelCard from '../components/hotel-card-components/hotel-card.component';
+import {fetchHotels, FilterTypes, showModalInfo} from "../actions/index";
+import {HotelCard} from '../components/hotel-card-components/hotel-card.component';
+import {GoogleMap} from '../components/map.component';
+import Modal from '../components/modal';
 
 export class HotelsList extends Component {
+
+    constructor(props) {
+        super(props);
+        this.showHotelsDetails = this.showHotelsDetails.bind(this);
+        this.renderHotels = this.renderHotels.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+    }
 
     componentDidMount() {
         this.getHotelsList();
@@ -16,6 +25,7 @@ export class HotelsList extends Component {
 
     render() {
         let data;
+        let modal = this.props.modalInfo ? this.renderModal() : <noscript/>;
 
         if (this.props.hotels && this.props.hotels.length) {
             data = this.props.hotels.map(this.renderHotels);
@@ -33,14 +43,50 @@ export class HotelsList extends Component {
         return (
             <main className='col-sm-12 col-md-10'>
                 {data}
+                {modal}
             </main>
         );
     }
 
     renderHotels(hotelData) {
         return (
-            <HotelCard key={hotelData.name} data={hotelData}/>
+            <HotelCard key={hotelData.name} data={hotelData} onClick={this.showHotelsDetails}/>
         );
+    }
+
+    renderModal() {
+        const {lat, lon} = this.props.modalInfo.location;
+
+        return (
+            <Modal>
+                <div className="modal" role="dialog">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">{this.props.modalInfo.name}</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.closeModal}>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="map-wrapper">
+                                    <GoogleMap lat={lat * 1} lng={lon * 1}/>
+                                </div>
+                                <p>{this.props.modalInfo.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+        )
+    }
+
+    showHotelsDetails(data) {
+        this.props.showModalInfo(data);
+    }
+
+    closeModal() {
+        this.props.showModalInfo(null);
     }
 }
 
@@ -67,11 +113,15 @@ function getVisibleHotels(initialHotelsList, filterState) {
 }
 
 function mapStateToProps(state) {
-    return {hotels: getVisibleHotels(state.hotels, state.filter), hotelsNumber: state.hotels.length};
+    return {
+        hotels: getVisibleHotels(state.hotels, state.filter),
+        hotelsNumber: state.hotels.length,
+        modalInfo: state.modal
+    };
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchHotels}, dispatch);
+    return bindActionCreators({fetchHotels, showModalInfo}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HotelsList);
