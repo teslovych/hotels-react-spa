@@ -6,7 +6,7 @@ export class RatingFilterComponent extends RatingBaseComponent {
         super(props);
     }
 
-    activeColor = 'blue'
+    activeColor = 'blue';
 
     onFilter = (index) => {
         this.props.onFilter(index + 1);
@@ -15,11 +15,13 @@ export class RatingFilterComponent extends RatingBaseComponent {
     getStars = (star, index) => {
         return (
             <i key={index} onClick={() => this.onFilter(index)} className={this.getStarIcon(index)}
-               style={{color: this.getColor(index)}}/>
+               style={{color: this.getColor(index)}}><span className="icon__index">{this.getDisplayIndex(index)}</span></i>
         )
     }
 
-    getStarIcon = index => (index < this.props.rating) ? 'fas fa-star' : 'far fa-star';
+    getDisplayIndex = index => (!index) ? '0+' : ++index;
+
+    getStarIcon = index => (index < this.props.rating) ? 'fas fa-star active-filter' : 'far fa-star';
 
 
     render() {

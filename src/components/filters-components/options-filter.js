@@ -18,11 +18,11 @@ export class OptionsFilter extends Component {
                 <h6>Popular filters</h6>
                 <form>
                     <div>
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input" type="checkbox" id="hasPool" value="true"
+                        <div className="form-group">
+                            <input className="checkbox" type="checkbox" id="hasPool" value="true"
                                    checked={this.state.poolChecked}
                                    onChange={this.onInputChange} />
-                            <label className="form-check-label" htmlFor="hasPool">Pool</label>
+                            <label className="label" htmlFor="hasPool">Pool</label>
                         </div>
                     </div>
                 </form>

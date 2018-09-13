@@ -19,9 +19,9 @@ export class NameFilter extends Component {
                 <form onSubmit={this.onFilter}>
                     <div className="input-group input-group-sm mb-3">
                         <div className="input-group-prepend">
-                    <span className="input-group-text" onClick={this.onFilter}>
-                        <i className="fas fa-search" />
-                    </span>
+                            <span className="input-group-text" onClick={this.onFilter}>
+                                <i className="fas fa-search" />
+                            </span>
                         </div>
                         <input type="text"
                                placeholder="Hotel name"

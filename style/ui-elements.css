@@ -1,0 +1,45 @@
+.checkbox {
+    display: none;
+}
+
+.checkbox + label {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.checkbox + label:before {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    content: '';
+    border: 1px solid #7ca2c1;
+    text-align: center;
+    cursor: pointer;
+    line-height: 20px;
+    vertical-align: middle;
+}
+
+.checkbox:checked + label:before {
+    content: '\2714\fe0e';
+    color: #7ca2c1;
+}
+
+.input-group .input-group-prepend .input-group-text {
+    background: transparent;
+    border-radius: 0;
+    border: 1px solid #7ca2c1;
+}
+
+.input-group .form-control {
+    padding: 0.45rem .5rem;
+    border-left: none;
+    border-radius: 0;
+    font-size: 12px;
+}
+
+.form-control,
+.form-control:focus {
+    border-color: #7ca2c1;
+}
+
