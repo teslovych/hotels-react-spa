@@ -8,6 +8,8 @@ export class NameFilter extends Component {
             term: ''
         };
 
+        this.inputTimeout;
+
         this.onInputChange = this.onInputChange.bind(this);
         this.onFilter = this.onFilter.bind(this);
     }
@@ -41,12 +43,22 @@ export class NameFilter extends Component {
     }
 
     onInputChange($event) {
+        clearTimeout(this.inputTimeout);
+
         this.setState({
             term: $event.target.value
         }, function () {
             if (!this.state.term.length) {
                 this.props.onFilter(this.state.term);
+            } else {
+                this.inputTimeout = setTimeout(()=>{
+                    this.props.onFilter(this.state.term);
+                }, 1000);
             }
         });
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.inputTimeout);
     }
 }

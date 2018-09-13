@@ -77,10 +77,6 @@ aside input[type="text"]:focus {
     background: rgba(0, 0, 0, 0.5);
 }
 
-.modal-wrapper .modal .card {
-    width: 30vw;
-}
-
 .map-box {
     height: 300px;
 }
